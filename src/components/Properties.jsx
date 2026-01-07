@@ -6,11 +6,15 @@ import property1 from "../assets/properties1.jpg";
 import property2 from "../assets/properties2.jpg";
 import property3 from "../assets/properties3.jpg";
 import property4 from "../assets/properties4.jpg";
+import { ScrollTrigger } from "gsap/all";
+
 
 const PropertyItem = ({ img, text }) => {
   const overlayRef = useRef(null);
   const uptextRef = useRef(null);
   const lineRef = useRef(null);
+    gsap.registerPlugin(ScrollTrigger);
+
   const { contextSafe } = useGSAP();
 
   const onMouseEnter = contextSafe(() => {
@@ -100,16 +104,57 @@ const Properties = () => {
     { img: property4, text: "Acquisitions" },
   ];
 
+  const propertyRef = useRef(null);
+  const container = useRef(null); // Scope for all animations
+  gsap.registerPlugin(ScrollTrigger);
+
+useGSAP(() => {
+    // 1. Heading Animation
+    gsap.from(".propertyheading", {
+      x: -100,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: ".propertyheading",
+        start: "top 80%", // Trigger when heading is 80% from top of viewport
+      },
+    });
+
+    // 2. Paragraph Animation
+    gsap.from(".propertypara", {
+      x: 100,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: ".propertypara",
+        start: "top 85%",
+      },
+    });
+
+    // 3. Grid Items Animation (Staggered)
+    // We target the children of propertyRef for a better visual effect
+    gsap.from(propertyRef.current.children, {
+      rotateX: 90,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2, // Items pop in one after another
+      scrollTrigger: {
+        trigger: propertyRef.current,
+        start: "top 70%", // Starts when the top of the grid hits 70% of viewport
+      },
+    });
+  }, { scope: container });
+
   return (
-    <div className="mt-20 px-10 bg-dg min-h-screen">
+    <div 
+    ref={container}
+    className="mt-20 px-10 min-h-screen">
       <div className="flex flex-col md:flex-row items-top font-sans gap-10 md:gap-20 mb-10">
-        <h1 className="mainheading text-nowrap text-[6vw] text-white leading-tight">
+        <h1 className="propertyheading text-nowrap text-[6vw] text-white leading-tight">
           Welcome to{" "}
           <span className="font-extralight italic text-primary">Modern</span>{" "}
           <br />
           <span className="font-extralight italic text-primary">Luxury</span>
         </h1>
-        <p className="mainpara mt-8 text-secondary max-w-xl">
+        <p className="propertypara mt-8 text-secondary max-w-xl">
           <span className="tracking-[0.45vw] uppercase text-sm font-semibold">
             BEAUTIFUL PROPERTiES
           </span>{" "}
@@ -122,7 +167,10 @@ const Properties = () => {
       </div>
 
       {/* Grid Layout for the items */}
-      <div className="grid grid-cols-1 md:grid-rows- gap-6 pb-20">
+      <div
+        ref={propertyRef}
+        className="grid grid-cols-1 md:grid-rows- gap-6 pb-20"
+      >
         {propertiesimg.map((elem, idx) => (
           <PropertyItem key={idx} {...elem} />
         ))}

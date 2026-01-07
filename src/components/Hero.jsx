@@ -14,9 +14,9 @@ const Hero = () => {
 
     tl.from(textHeroRef.current.children, {
       // Notice .children here
-      rotateY: -90,
+      rotateX: -90,
       opacity: 0,
-      duration: .15,
+      duration: 1,
       stagger: 0.3, // Now this will trigger for the H1, then the P
       ease: "power3.out",
     });
@@ -24,7 +24,7 @@ const Hero = () => {
     tl.from(imgHeroRef.current, {
       y: 100,
       opacity: 0,
-      duration: 2,
+      duration: 1,
       ease: "power3.out",
     });
   });

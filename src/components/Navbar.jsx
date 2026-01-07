@@ -8,16 +8,14 @@ const Navbar = () => {
   const logoRef = useRef(null);
   const linkRef = useRef(null);
   useGSAP(function () {
-    let tl = gsap.timeline();
-
-    tl.from(logoRef.current, {
+    gsap.from(logoRef.current, {
       opacity: 0,
       duration: 1,
       y: -50,
       ease: "power3.out",
     });
 
-    tl.from(linkRef.current.children, {
+    gsap.from(linkRef.current.children, {
       opacity: 0,
       duration: 1,
       y: -50,

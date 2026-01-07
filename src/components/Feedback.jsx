@@ -10,6 +10,7 @@ import { useGSAP } from "@gsap/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
 const FeedbackCard = ({ image, name, review }) => {
   return (
@@ -82,14 +83,48 @@ const Feedback = () => {
     },
   ];
 
+  let slideRef = useRef(null);
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  useGSAP(function () {
+    gsap.from(".feedheading", {
+      x: -100,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: ".feedheading",
+        top: "top 50%",
+      },
+    });
+
+    gsap.from(".feedpara", {
+      x: -100,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: ".feedpara",
+        top: "top 50%",
+      },
+    });
+
+    gsap.from(slideRef.current, {
+      rotateX: 90,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: slideRef.current,
+        top: "top 50%",
+      },
+    });
+  });
+
   return (
     <div className="mt-20 px-10 bg-dg min-h-screen">
       <div className="flex flex-col items-center font-sans gap-10 mb-10">
-        <h1 className="tracking-[0.45vw] text-secondary uppercase text-sm font-semibold">
+        <h1 className="feedpara tracking-[0.45vw] text-secondary uppercase text-sm font-semibold">
           TESTIMONIALS
         </h1>
 
-        <h1 className="mainheading text-[6vw] text-white leading-tight">
+        <h1 className="feedheading text-[6vw] text-white leading-tight">
           Client
           <span className="font-extralight ml-5 italic text-primary">
             Reviews
@@ -107,7 +142,8 @@ const Feedback = () => {
       </div>
 
       <Swiper
-  modules={[Navigation, Pagination]}
+        ref={slideRef}
+        modules={[Navigation, Pagination]}
         navigation={{
           prevEl: ".feedback-prev",
           nextEl: ".feedback-next",
@@ -116,10 +152,10 @@ const Feedback = () => {
         spaceBetween={60}
         speed={800}
         loop={true}
-  pagination={{
-    el: ".feedback-pagination",
-    clickable: true,
-  }}
+        pagination={{
+          el: ".feedback-pagination",
+          clickable: true,
+        }}
         className="max-w-6xl mx-auto -mt-10"
       >
         {customerdata.map((item) => (
@@ -129,7 +165,6 @@ const Feedback = () => {
         ))}
       </Swiper>
       <div className="feedback-pagination active:bg-amber-300 flex justify-center mt-10"></div>
-
     </div>
   );
 };
