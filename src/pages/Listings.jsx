@@ -95,19 +95,27 @@ const Listings = () => {
           </span>
         </p>
       </div>
-      {/* Added grid, grid-cols-2 for two columns per row, and gap-6 for spacing */}
-      <div
-        ref={cardRef}
-        className="flex flex-wrap justify-center items-center mt-15 gap-6"
+{/* Grid container with 2 columns */}
+<div
+  ref={cardRef}
+  className="grid grid-cols-1 md:grid-cols-2 mt-15 gap-10 max-w-7xl mx-auto"
+>
+  {listingData.map((elem, index) => {
+    // Check if it's the 3rd item (index 2) to make it span full width
+    const isLastOne = index === 2;
+
+    return (
+      <div 
+        key={elem.id} 
+        className={`${isLastOne ? "md:col-span-2 flex justify-center" : ""}`}
       >
-        {listingData.map((elem, index) => {
-          return (
-            <div key={index} className="">
-              <ListingCard {...elem} />
-            </div>
-          );
-        })}
+        <div className={`${isLastOne ? "w-full md:max-w-[calc(50%-20px)]" : "w-full"}`}>
+          <ListingCard {...elem} />
+        </div>
       </div>
+    );
+  })}
+</div>
     </div>
   );
 };

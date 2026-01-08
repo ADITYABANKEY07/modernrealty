@@ -127,13 +127,13 @@ const Areas = () => {
       <div className="z-50 absolute w-full max-w-7xl left-1/2 -translate-x-1/2 flex justify-start ml-15 top-85 pr-10 text-white">
         <button
           onClick={() => slide("prev")}
-          className="cursor-pointer hover:text-gray-400 transition-colors"
+          className="cursor-pointer transition-colors"
         >
           <RiArrowDropLeftLine size={70} />
         </button>
         <button
           onClick={() => slide("next")}
-          className=" -ml-8 cursor-pointer hover:text-gray-400 transition-colors"
+          className=" -ml-8 cursor-pointer transition-colors"
         >
           <RiArrowDropRightLine size={70} />
         </button>
