@@ -40,6 +40,7 @@ const ArticlesCard = ({
   title,
   desc,
   reverse,
+  isLast
 }) => {
   const titleRef = useRef(null);
   const btnRef = useRef(null);
@@ -56,13 +57,12 @@ const ArticlesCard = ({
   
 
   return (
-    <div
+<div
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      className={`grid md:grid-cols-2 gap-12 items-center mb-32 ${
-        reverse
-          ? "md:[&>*:first-child]:order-2 md:[&>*:last-child]:order-1"
-          : ""
+      // {/* Change mb-32 to a conditional class */}
+      className={`grid md:grid-cols-2 gap-12 items-center ${isLast ? 'mb-0' : 'mb-32'} ${
+        reverse ? "md:[&>*:first-child]:order-2 md:[&>*:last-child]:order-1" : ""
       }`}
     >
       {/* Left Content */}
@@ -168,11 +168,17 @@ const Articles = () => {
         </h1>
       </div>
 
-      <div ref={articleDivRef}>
-        {articlesdata.map((item, idx) => (
-          <ArticlesCard key={item.id} {...item} reverse={idx % 2 !== 0} />
-        ))}
-      </div>
+<div ref={articleDivRef}>
+  {articlesdata.map((item, idx) => (
+    <ArticlesCard 
+      key={item.id} 
+      {...item} 
+      reverse={idx % 2 !== 0} 
+      // Add a custom class if it's the last item
+      isLast={idx === articlesdata.length - 1} 
+    />
+  ))}
+</div>
     </section>
   );
 };

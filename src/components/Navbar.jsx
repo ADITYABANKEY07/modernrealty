@@ -31,7 +31,7 @@ const Navbar = () => {
         alt="logo"
       />
       <div ref={linkRef} className="flex gap-5 navlink">
-        <Link className="font-light font-sans text-xl text-white" to="/">
+        <Link className="font-light font-sans text-xl text-white" to="/home">
           Home
         </Link>
         <Link className="font-light font-sans text-xl text-white" to="/about">

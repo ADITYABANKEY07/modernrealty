@@ -2,7 +2,6 @@ import Areas from "../components/Areas";
 import Articles from "../components/Articles";
 import ContactCard from "../components/ContactCard";
 import Feedback from "../components/Feedback";
-import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import Parallax from "../components/Parallax";
 import Properties from "../components/Properties";
@@ -21,7 +20,6 @@ const Home = () => {
       <Areas/>
       <Articles/>
       <ContactCard/>
-      <Footer/>
     </div>
   );
 };
