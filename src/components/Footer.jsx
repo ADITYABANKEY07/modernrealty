@@ -1,38 +1,40 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import {
-  Instagram,
-  Facebook,
-  Twitter,
-  Youtube,
-  Phone,
-  Mail,
-} from "lucide-react";
+import { ScrollTrigger } from "gsap/ScrollTrigger"; // Specific import is better
+import { Instagram, Facebook, Twitter, Youtube, Phone, Mail } from "lucide-react";
 import { useRef } from "react";
+import { useLocation } from "react-router-dom"; // 1. Add this import
+// Register the plugin
+gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
   const footerRef = useRef(null);
+  const location = useLocation(); // 2. Initialize location
 
   useGSAP(() => {
+    // 3. Force GSAP to recalculate the page height/positions
+    ScrollTrigger.refresh();
+
     gsap.fromTo(
       footerRef.current,
-      { y: 120, opacity: 0 },
+      { 
+        y: 50, 
+        autoAlpha: 0 
+      },
       {
         y: 0,
-        opacity: 1,
+        autoAlpha: 1,
         duration: 1.2,
         ease: "power4.out",
         scrollTrigger: {
           trigger: footerRef.current,
-          start: "top 80%",
+          start: "top bottom-=100", 
           toggleActions: "play none none reverse",
         },
       }
     );
-  }, []);
-
-  return (
+  }, { dependencies: [location.pathname], scope: footerRef }); // 4. Add dependency and scope
+  return(
     <footer ref={footerRef} className="bg-dgl w-full mt-25 text-gray-300 pt-20">
       <div className="w-full px-10 xl:px-24 2xl:px-40 grid grid-cols-1 md:grid-cols-4 gap-16">
         {/* Logo & Description */}
